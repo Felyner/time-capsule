@@ -1,0 +1,5 @@
+Use these credentials when managing from the admin interface in Django
+
+username: "admin"
+password: "password"
+
