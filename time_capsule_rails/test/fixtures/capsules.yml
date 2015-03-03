@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  title: MyString
+  description: MyText
+  unlock: 2015-03-02 19:56:25
+
+two:
+  user_id: 1
+  title: MyString
+  description: MyText
+  unlock: 2015-03-02 19:56:25
