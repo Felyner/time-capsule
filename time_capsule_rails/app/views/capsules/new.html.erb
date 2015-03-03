@@ -1,0 +1,30 @@
+<h1>New Capsule</h1>
+
+<%= form_for @capsule do |f| %>
+	<p>
+		<%= f.label :title %><br />
+		<%= f.text_field :title %>
+	</p>
+	<p>
+		<%= f.label :description %><br />
+		<%= f.text_area :description %>
+	</p>
+	<%= fields_for @items do |i| %>
+		<p>
+			<%= i.label :file %>
+			<%= i.file_field :file %>
+			<%= i.label :title %>
+			<%= i.text_field :title %>
+			<%= i.label :description %>
+			<%= i.text_area :description %>
+		</p>
+	<% end %>
+	<p>
+		<%= f.label :unlock %><br />
+		<%= f.date_select :unlock %>
+	</p>
+	<%= f.submit "Submit" %>
+<% end %>
+
+<br />
+<%= link_to "Back", capsules_path %>

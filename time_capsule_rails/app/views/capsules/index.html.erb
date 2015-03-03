@@ -1,5 +1,5 @@
 <h1>Capsules Index</h1>
-<p>This is the capsules index page.</p>
+<%= link_to "New Time Capsule", new_capsule_path%>
 <% @capsules.each do |capsule| %>
 	<%= capsule.title %>
 <% end %>
