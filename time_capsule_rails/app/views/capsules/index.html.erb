@@ -1,2 +1,5 @@
 <h1>Capsules Index</h1>
 <p>This is the capsules index page.</p>
+<% @capsules.each do |capsule| %>
+	<%= capsule.title %>
+<% end %>
