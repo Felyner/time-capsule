@@ -1,10 +1,11 @@
-# Time Capsule
+Time Capsule
+============
 
-## Rails Version
+### Rails Version
 Patrick Mathieu
 
-## Django Version
+### Django Version
 Kevin Stewart
 
-## PHP Version
+### PHP Version
 Quintin Leong
