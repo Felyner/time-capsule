@@ -8,14 +8,19 @@ class CapsulesController < ApplicationController
 
 	def new
 		@capsule = Capsule.new
-		@items = Item.new
+		@item = Item.new
 	end
 
 	def create
-		@capsule = Capsule.new(params[:f])
-		@items = Item.new(params[:i])
+		@capsule = Capsule.new(params.require(:capsule).permit(:title, :description, :unlock))
+		@capsule.user_id = current_user.id
+		@item = Item.new(params.require(:item).permit(:title, :description))
 		if @capsule.save
-			redirect_to capsules_path, :notice => "Your time capsule has been locked away"
+			if @item.save
+				redirect_to capsules_path, :notice => "Your time capsule has been locked away"
+			else
+				render "new"
+			end
 		else
 			render "new"
 		end

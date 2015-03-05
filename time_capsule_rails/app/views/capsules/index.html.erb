@@ -1,5 +1,7 @@
 <h1>Capsules Index</h1>
-<%= link_to "New Time Capsule", new_capsule_path%>
-<% @capsules.each do |capsule| %>
-	<%= capsule.title %>
+<%= link_to "New Time Capsule", new_capsule_path%><br /><br />
+<% @capsules.reverse.each do |capsule| %>
+	<% if capsule.user_id == current_user.id %>
+		<%= capsule.title %><br />
+	<% end %>
 <% end %>

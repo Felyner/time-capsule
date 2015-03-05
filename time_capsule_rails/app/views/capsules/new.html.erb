@@ -1,6 +1,12 @@
 <h1>New Capsule</h1>
 
-<%= form_for @capsule do |f| %>
+<script>
+	$("#add").on("click", function() {
+		$("#item_form").append($("#no_display").html());
+	});
+</script>
+
+<%= form_for @capsule, :url => { :action => "create" } do |f| %>
 	<p>
 		<%= f.label :title %><br />
 		<%= f.text_field :title %>
@@ -9,16 +15,20 @@
 		<%= f.label :description %><br />
 		<%= f.text_area :description %>
 	</p>
-	<%= fields_for @items do |i| %>
-		<p>
-			<%= i.label :file %>
-			<%= i.file_field :file %>
-			<%= i.label :title %>
-			<%= i.text_field :title %>
-			<%= i.label :description %>
-			<%= i.text_area :description %>
-		</p>
-	<% end %>
+	<button id = "add">Add Item</button>
+	<div id = "item_form"></div>
+	<div id = "no_display" style = "display: none;">
+		<%= form_for @item do |i| %>
+			<p>
+				<%= i.label :file %>
+				<%= i.file_field :file %>
+				<%= i.label :title %>
+				<%= i.text_field :title %>
+				<%= i.label :description %>
+				<%= i.text_area :description %>
+			</p>
+		<% end %>
+	</div>
 	<p>
 		<%= f.label :unlock %><br />
 		<%= f.date_select :unlock %>
