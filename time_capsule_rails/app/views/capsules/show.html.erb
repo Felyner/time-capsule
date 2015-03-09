@@ -1,0 +1,16 @@
+<h1>Capsule Items</h1>
+<h2>
+	<%= Capsule.find(params[:id]).title %>
+</h2>
+<h3>
+	<%= Capsule.find(params[:id]).description %>
+</h3>
+
+<% @items.each do |i| %>
+	<% if i.capsule_id == params[:id].to_i %>
+		<%= link_to i.file_file_name, i.file.url(:original, false) %><br />
+	<% end %>
+<% end %>
+
+<br />
+<%= link_to "Back", capsules_path %>

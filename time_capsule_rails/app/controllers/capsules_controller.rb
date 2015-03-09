@@ -11,7 +11,7 @@ class CapsulesController < ApplicationController
 	end
 
 	def show
-		
+		@items = Item.all
 	end
 
 	def create
