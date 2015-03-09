@@ -2,6 +2,12 @@
 <%= link_to "New Time Capsule", new_capsule_path%><br /><br />
 <% @capsules.reverse.each do |capsule| %>
 	<% if capsule.user_id == current_user.id %>
-		<%= capsule.title %><br />
+		<%= capsule.title %>
+		<% if (Date.tomorrow >= capsule.unlock) %>
+			- <%= link_to "Unlock", capsule_path(capsule.id) %>
+		<% else %>
+			- Unlocks on <%= capsule.unlock.strftime("%b %d, %Y") %>
+		<% end %>
+		<br />
 	<% end %>
 <% end %>

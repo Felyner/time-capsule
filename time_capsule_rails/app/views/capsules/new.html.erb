@@ -1,43 +1,20 @@
 <h1>New Capsule</h1>
 
-<script>
-    $("#capsule_submit").on("click", function() {
-        $("#capsule_form").append($("#item_form").html());
-        $("#capsule_form").remove();
-    });
-</script>
-
-<div id = "capsule_form">
-    <%= form_for @capsule, :url => { :action => "create" } do |f| %>
-        <p>
-            <%= f.label :title %><br />
-            <%= f.text_field :title %>
-        </p>
-        <p>
-            <%= f.label :description %><br />
-            <%= f.text_area :description %>
-        </p>
-        <p>
-            <%= f.label :unlock %><br />
-            <%= f.date_select :unlock %>
-        </p>
-        <div id = "capsule_submit">
-            <%= f.submit "Submit" %>
-        </div>
-    <% end %>
-</div>
-<div id = "item_form" style = "display: none;">
-    <%= form_for @item, :html => { :multipart => true }, :url => { :action => "create" } do |i| %>
-        <p>
-            <%= i.label :file %>
-            <%= i.file_field :file %>
-            <%= i.label :title %>
-            <%= i.text_field :title %>
-            <%= i.label :description %>
-            <%= i.text_area :description %>
-        </p>
-    <% end %>
-</div>
+<%= form_for @capsule, :url => { :action => "create" } do |f| %>
+    <p>
+        <%= f.label :title %><br />
+        <%= f.text_field :title %>
+    </p>
+    <p>
+        <%= f.label :description %><br />
+        <%= f.text_area :description %>
+    </p>
+    <p>
+        <%= f.label :unlock %><br />
+        <%= f.date_select :unlock %>
+    </p>
+    <%= f.submit "Create" %>
+<% end %>
 
 <br />
 <%= link_to "Back", capsules_path %>

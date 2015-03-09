@@ -1,0 +1,23 @@
+<h1>Add Items</h1>
+
+<% Item.all.each do |i| %>
+	<% if i.capsule_id == params[:capsule_id].to_i %>
+		<%= i.file_file_name %><br />
+	<% end %>
+<% end %>
+
+<%= form_for @item, :html => { :multipart => true }, :url => { :action => "create" } do |i| %>
+    <p>
+        <%= i.label :file %>
+        <%= i.file_field :file %>
+        <%= i.label :title %>
+        <%= i.text_field :title %>
+        <%= i.label :description %>
+        <%= i.text_area :description %>
+    </p>
+    <%= hidden_field_tag :capsule_id, params[:capsule_id] %>
+    <%= i.submit "Add" %>
+<% end %>
+
+<br />
+<%= link_to "Done", capsules_path %>
