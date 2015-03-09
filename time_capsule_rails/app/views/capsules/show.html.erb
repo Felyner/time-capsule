@@ -8,7 +8,9 @@
 
 <% @items.each do |i| %>
 	<% if i.capsule_id == params[:id].to_i %>
-		<%= link_to i.file_file_name, i.file.url(:original, false) %><br />
+		<%= i.title %>
+		- <%= link_to i.file_file_name, i.file.url(:original, false) %>
+		- <%= i.description %><br />
 	<% end %>
 <% end %>
 

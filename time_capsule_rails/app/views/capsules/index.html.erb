@@ -3,11 +3,12 @@
 <% @capsules.reverse.each do |capsule| %>
 	<% if capsule.user_id == current_user.id %>
 		<%= capsule.title %>
-		<% if (Date.tomorrow >= capsule.unlock) %>
+		<% if (Date.today >= capsule.unlock) %>
 			- <%= link_to "Unlock", capsule_path(capsule.id) %>
 		<% else %>
 			- Unlocks on <%= capsule.unlock.strftime("%b %d, %Y") %>
 		<% end %>
+		- <%= link_to "Delete", capsule_path(capsule.id), :method => :delete, :data => { confirm: "Are you sure?" } %>
 		<br />
 	<% end %>
 <% end %>

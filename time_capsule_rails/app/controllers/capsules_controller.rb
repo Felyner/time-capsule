@@ -24,6 +24,12 @@ class CapsulesController < ApplicationController
 		end
 	end
 
+	def destroy
+		Item.where(capsule_id: params[:id]).destroy_all
+		Capsule.find(params[:id]).destroy
+		redirect_to capsules_path
+	end
+
 	def capsule_params
 		params.require(:capsule).permit(:title, :description, :unlock)
 	end
