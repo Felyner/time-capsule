@@ -2,23 +2,21 @@
 <html>
 	<head>
 		<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 		<style>
 			html {
-				background-image: url("{% static "background.jpg"%}");
+				background-image: #FFFFFF);
 				font-family: 'Raleway', sans-serif;
 			}
 
 			#register {
-				position: relative;
-				top: 300px;
-				margin: 0 auto;
-				
+
 			}
 		</style>
 	</head>
 	<body>
-		<div id="register" style="width:250px;">
+		<div id="register">
 			<form action="/register/" method="post">
 				{% csrf_token %}
 				User Name: <input name="username" type="text" id="username" placeholder="Username" style="float:right"><br/>

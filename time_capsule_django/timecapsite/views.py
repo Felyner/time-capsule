@@ -1,16 +1,30 @@
 from django.shortcuts import render
-from django.views.generic.base import TemplateView
+#from django.views.generic.base import TemplateView
 from timecapsite.models import TimeCapsule, TimeCapsuleAsset
 from timecapsite.forms import Registration
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
-
+import datetime
 
 # Create your views here.
 
-class Index(TemplateView):
-	template_name = 'index.html'
+def Index(request):
+	if request.user.is_authenticated():
+		today = datetime.date.today()
+		userCaps = TimeCapsule.objects.filter(userID=request.user)
+		userCapsLocked = userCaps.filter(tsUnlock__gte=today)
+		userCapsUnlocked = userCaps.filter(tsUnlock__lte=today)
+		tcAssets = TimeCapsuleAsset.objects.filter()
+	else:
+		userCaps = None
+		userCapsLocked = None
+		userCapsUnlocked = None
+		tcAssets = None
+	return render(
+            request,
+            'index.html',
+            {'userCaps': userCaps, "userCapsLocked":userCapsLocked, "userCapsUnlocked":userCapsUnlocked, "tcAssets":tcAssets})
 
 def register(request):
 	registered = False
@@ -33,10 +47,7 @@ def register(request):
             'register.html',
             {'registration': registration})
 
-def loginView(request):
-	#authenticated_user = authenticate (username=request.POST['username'], password = request.POST['password'])
-	#login(request, authenticated_user)
-	
+def loginView(request):	
 	if request.method == "POST":
 		authenticated_user = authenticate (username=request.POST['username'], password = request.POST['password'])
 		login(request, authenticated_user)
@@ -50,7 +61,13 @@ def logoutView(request):
 	return HttpResponseRedirect('/')
 
 def createTimeCap(request):
-	timeCapsule = TimeCapsule(tsUnlock=request.POST.get('tsUnlock'), userID = request.user)
+	timeCapsule = TimeCapsule(tsCreated=datetime.date.today(), tsUnlock=request.POST.get('tsUnlock'), userID = request.user)
 	timeCapsule.save()
+	print "number of files: ", len(request.FILES)
+	fileCount = 1
+	for file in request.FILES:
+		timeCapsuleAsset = TimeCapsuleAsset(parentID=timeCapsule, asset=request.FILES['timeCapAsset_' + str(fileCount)])
+		timeCapsuleAsset.save()
+		fileCount += 1
 	return HttpResponseRedirect('/')
 	
