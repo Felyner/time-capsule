@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+		<style>
+			html {
+				background-image: url("{% static "background.jpg"%}");
+				font-family: 'Raleway', sans-serif;
+			}
+
+			#register {
+				position: relative;
+				top: 300px;
+				margin: 0 auto;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div id="register" style="width:250px;">
+			<form action="/register/" method="post">
+				{% csrf_token %}
+				User Name: <input name="username" type="text" id="username" placeholder="Username" style="float:right"><br/>
+				First Name:<input name="first_name" type="text" id="first_name" placeholder="First Name" style="float:right"><br/>
+				Last Name:<input name="last_name" type="text" id="last_name" placeholder="Last Name" style="float:right"><br/>
+				Email:<input name="email" type="text" id="email" placeholder="E-mail Address" style="float:right"><br/>
+				Password:<input name="password" type="password" id="password" style="float:right"><br/>
+				<button name="Submit" type="submit" id="submit" name="submit" value="register">Register</button>
+			</form>
+		</div>
+	</body>
+	<footer>
+	</footer>
+</html>

@@ -1,0 +1,32 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+		<style>
+			html {
+				background-image: url("{% static "background.jpg"%}");
+				font-family: 'Raleway', sans-serif;
+			}
+
+			#login {
+				position: relative;
+				top: 300px;
+				margin: 0 auto;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div id="login" style="width:250px;">
+			<form action="/login/" method="post">
+				{% csrf_token %}
+				User Name: <input name="username" type="text" id="username" placeholder="Username" style="float:right"><br/>
+				Password:<input name="password" type="password" id="password" style="float:right"><br/>
+				<button name="Submit" type="submit" id="submit" name="submit" value="login">Login</button>
+			</form>
+		</div>
+	</body>
+	<footer>
+	</footer>
+</html>
