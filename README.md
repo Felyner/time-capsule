@@ -49,4 +49,8 @@ At this point you can open up a web browser and navigate to the following URL to
 ```
 http://localhost:3000
 ```
-You will first be prompted with a login screen, so be sure to register. Once you are signed up you are able to create time capsules and add files to them. If you wish to delete a time capsule you are able to do so, even if the unlock date has not been reached. Otherwise, you can wait until your time capsule is ready to be opened and view all of the treasures locked inside.
+If you are faced with PendingMigrationError make sure you make migrations to the database by running this command from your terminal
+```
+rake db:migrate
+```
+This will load all the tables with their respective properties and is only necessary upon first use of the application (GitHub messes around with things). Upon arrival, you will be greeted with a login screen, so be sure to register. Once you are signed up you are able to create time capsules and add files to them. If you wish to delete a time capsule you are able to do so, even if the unlock date has not been reached. Otherwise, you can wait until your time capsule is ready to be opened and view all of the treasures locked inside.
