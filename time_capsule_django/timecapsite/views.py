@@ -10,7 +10,7 @@ def Index(request):
 	if request.user.is_authenticated():
 		today = datetime.date.today()
 		userCaps = TimeCapsule.objects.filter(userID=request.user)
-		userCapsLocked = userCaps.filter(tsUnlock__gte=today)
+		userCapsLocked = userCaps.filter(tsUnlock__gt=today)
 		userCapsUnlocked = userCaps.filter(tsUnlock__lte=today)
 		tcAssets = TimeCapsuleAsset.objects.filter()
 	else:
