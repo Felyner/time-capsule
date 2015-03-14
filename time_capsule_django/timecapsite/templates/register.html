@@ -1,31 +1,88 @@
 {% load staticfiles %}
 <html>
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+		<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 		<style>
 			html {
-				background-image: #FFFFFF);
-				font-family: 'Raleway', sans-serif;
+				background: #2B3E50;
+				font-family: 'Lato', sans-serif;
+			}
+			body {
+				background: #2B3E50;
+				color: #000000;
+				font-family: 'Lato', sans-serif;
 			}
 
-			#register {
+			#welcome {
+				color:#000000;
+				font-family: 'Lato', sans-serif;
+				top:100px;
+			}
 
+			.navbar-inverse .navbar-brand {
+				color: #FFFFFF;
+			}
+
+			.navbar-inverse .navbar-nav>li>a {
+				color:#FFFFFF;
+			}
+
+			.container .jumbotron {
+				border-radius:0px;
 			}
 		</style>
 	</head>
 	<body>
-		<div id="register">
-			<form action="/register/" method="post">
-				{% csrf_token %}
-				User Name: <input name="username" type="text" id="username" placeholder="Username" style="float:right"><br/>
-				First Name:<input name="first_name" type="text" id="first_name" placeholder="First Name" style="float:right"><br/>
-				Last Name:<input name="last_name" type="text" id="last_name" placeholder="Last Name" style="float:right"><br/>
-				Email:<input name="email" type="text" id="email" placeholder="E-mail Address" style="float:right"><br/>
-				Password:<input name="password" type="password" id="password" style="float:right"><br/>
-				<button name="Submit" type="submit" id="submit" name="submit" value="register">Register</button>
-			</form>
+
+
+		
+		<nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">Time Capsule</a>
+		    </div>
+
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      
+		      <ul class="nav navbar-nav navbar-right">
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+					<li><a href="/login">Log In</a></li>
+		            <li><a href="/register">Register</a></li>
+		          </ul>
+		        </li>
+		      </ul>
+		    </div>
+		  </div>
+		</nav>
+
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+				</div>
+				<div id="register" class="jumbotron col-md-6" style="background:#FFFFFF;text-align:center;">
+					<h1>Time Capsule</h1><br/>
+					<form action="/register/" method="post">
+						{% csrf_token %}
+						<div class="form-group">
+							User Name: <input class="form-control" name="username" type="text" id="username" placeholder="Username">
+							First Name:<input class="form-control" name="first_name" type="text" id="first_name" placeholder="First Name">
+							Last Name:<input class="form-control" name="last_name" type="text" id="last_name" placeholder="Last Name">
+							Email:<input class="form-control" name="email" type="text" id="email" placeholder="E-mail Address">
+							Password:<input class="form-control" name="password" type="password" id="password" style="float:right">
+						</div><br/><br/>
+						<button class="btn btn-danger" name="Submit" type="submit" id="submit" name="submit" value="register">Register</button>
+					</form>
+				</div>
+				<div class="col-md-3">
+				</div>
+			</div>
 		</div>
 	</body>
 	<footer>

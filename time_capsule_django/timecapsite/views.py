@@ -1,13 +1,10 @@
 from django.shortcuts import render
-#from django.views.generic.base import TemplateView
 from timecapsite.models import TimeCapsule, TimeCapsuleAsset
 from timecapsite.forms import Registration
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 import datetime
-
-# Create your views here.
 
 def Index(request):
 	if request.user.is_authenticated():
@@ -28,7 +25,6 @@ def Index(request):
 
 def register(request):
 	registered = False
-	#authUser = request.POST.get('username') or ''
 	if request.method == 'POST':
 		registration = Registration(data=request.POST)
 		if registration.is_valid():

@@ -7,82 +7,276 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 		<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+		<script type="text/javascript" src="{% static 'js/slimbox2.js' %}"></script>
+		<link rel="stylesheet" href="{% static 'css/slimbox2.css' %}" type="text/css" media="screen" />
 
 		<style>
 			html {
-				background-image: #FFFFFF;
-				font-family: 'Raleway', sans-serif;
+				background: #2B3E50;
+				font-family: 'Lato', sans-serif;
+			}
+			body {
+				background: #2B3E50;
+				color: #FFFFFF;
+				font-family: 'Lato', sans-serif;
 			}
 
 			#welcome {
-				
+				color:#000000;
+				font-family: 'Lato', sans-serif;
+				top:100px;
+			}
+
+			.navbar-inverse .navbar-brand {
+				color: #FFFFFF;
+			}
+
+			.navbar-inverse .navbar-nav>li>a {
+				color:#FFFFFF;
+			}
+
+			.container .jumbotron {
+				border-radius:0px;
+			}
+
+			#lbImage {
+				width:640px;
+			    height:480px;
+			    background-repeat: no-repeat;
+			    background-position:center;
+			    background-size: cover;
 			}
 
 		</style>
 		<script>
 			$(document).ready(function() {
 				var fileCount = 1
+				var newAssetID = '#timeCapAsset_1'
 				$("#addAssets").click(function(){
 					fileCount ++
 					$("#timeCapAssetNew").attr('name', 'timeCapAsset_' + fileCount)
 					newInput = $("#assetAdder").html()
 					$("#assetInputs").append(newInput)
 					$("#assetInputs #timeCapAssetNew").attr('id', 'timeCapAsset_' + fileCount)
+					newAssetID = '#timeCapAsset_' + fileCount
 				})
+
 				$("#newCap").click(function(){
-					$("#timecapsule").toggle()
 					$("#tsUnlock").datepicker({
 						dateFormat: 'yy-mm-dd'
 					})
 				})
 			})
+
 		</script>
 	</head>
 	<body>
-		<div id="welcome">
-			<h2>Time Capsule</h2><br/>
-			<div>
-				{% if user.is_authenticated %}
-				Welcome {{user}}!
-				<a href="/logout">Logout</a>
-				<br/><br/>
-				<button id="newCap">Create new TimeCapsule</button><br/><br/>
-				<form id="timecapsule" enctype="multipart/form-data" action="/createCapsule/" method="post" style="display:none">
-					{% csrf_token %}
-					Unlock date: <input id="tsUnlock" name="tsUnlock" style="float:right"/><br/><br />
-					<span id="assetInputs">Add asset: <input type="file" id="timeCapAsset_1" name="timeCapAsset_1" size="40" style="float:right"/><br/><br/></span>
-					<button id="addAssets" type="button">Add another asset</button>
-					<button name="Submit" type="submit" id="submit" name="submit" value="createNewCap">Submit</button>
 
-				</form>
+		
+		
+		
+
+		<nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">Time Capsule</a>
+		    </div>
+
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      
+		      <ul class="nav navbar-nav navbar-right">
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+					{% if user.is_authenticated %}
+			        {{user}}
+			        {%else%}
+					Login/Register
+			        {%endif%}
+		          	<span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+		          	{% if user.is_authenticated %}
+			        <li><a href="/logout">Log Out</a></li>
+			        {%else%}
+					<li><a href="/login">Log In</a></li>
+		            <li><a href="/register">Register</a></li>
+			        {%endif%}
+		          </ul>
+		        </li>
+		      </ul>
+		    </div>
+		  </div>
+		</nav>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+				</div>
+			<div id="welcome" class="jumbotron col-md-6" style="background:#FFFFFF;text-align:center;">
+				<h1>Time Capsule</h1><br/>
+				<div>
+					{% if user.is_authenticated %}
+					<br/><br/>
+					<button class="btn btn-danger" id="newCap" data-toggle="modal" data-target="#createModal">Create Time Capsule</button>&nbsp<button class="btn btn-warning" id="lockedCaps" data-toggle="modal" data-target="#lockedModal">Locked Capsules</button>&nbsp<button class="btn btn-success" id="unlockedCaps" data-toggle="modal" data-target="#unlockedModal">Unlocked Capsules</button><br/><br/>
+					
+				</div>
+				{%else%}
+					<a type="button" class="btn btn-success" href="/login">Login</a>&nbsp&nbsp<a type="button" class="btn btn-danger" href="/register">Sign up</a>
+				{%endif%}
 			</div>
-			{%else%}
-				<a href="/login">Login</a> or <a href="/register">Register</a>
-			{%endif%}
+			<div class="col-md-3">
+			</div>
+			
+
 		</div>
-		{% if user.is_authenticated %}
-		<div id="lockedTimeCaps">
-			<br/><br/><b>Locked Time Capsules</b><br/><br/>
-			{%for cap in userCapsLocked%}
-			You created a time capsule on {{cap.tsCreated}} that will unlock on {{cap.tsUnlock}}<br/><br/>
-			{%endfor%}
-		</div>
-		<div id="unlockedTimeCaps">
-			<br/><br/><b>Unlocked Time Capsules</b><br/><br/>
-			{%for cap in userCapsUnlocked%}
-			A time capsule from back on {{cap.tsCreated}} has been unearthed! Here are the contents:<br/>
-			{%for tcAsset in tcAssets%}
-			{%if tcAsset.parentID == cap%}
-			<a href="media/{{tcAsset.asset}}">{{tcAsset.asset}}</a><br/>
-			{%endif%}
-			{%endfor%}
-			<br/>
-			{%endfor%}
-		</div>
-		{%endif%}
-		<div id="assetAdder" style="display:none">
-			Add asset: <input type="file" id="timeCapAssetNew" name="timeCapAssetNew" size="40" style="float:right"/><br/><br/>
-		</div>
+	</div>
+		
+
+		
+
+		
+			<div id="assetAdder" style="display:none">
+				Add Item: <input class="form-control" type="file" id="timeCapAssetNew" name="timeCapAssetNew" size="40" /><br/>
+				
+			</div>
+
+
+
+			<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header" style="background:#D9534F">
+			        <h4 class="modal-title" id="createModalLabel" style="text-shadow:none;">Create New Time Capsule</h4>
+			      </div>
+			      <div class="modal-body" style="color:#000000;">
+
+			        <form id="timecapsule" enctype="multipart/form-data" action="/createCapsule/" method="post">
+						{% csrf_token %}
+						<div class="form-group">
+						<label for="tsUnlock">Unlock date:</label> <input class="form-control" id="tsUnlock" name="tsUnlock"/>
+							<span id="assetInputs">Add Item:<input class="form-control" type="file" id="timeCapAsset_1" name="timeCapAsset_1" size="40" /></span><br/>
+							<button id="addAssets" class="btn btn-default" type="button">Add another asset</button>
+							<button name="Submit" class="btn btn-default" type="submit" id="submit" name="submit" value="createNewCap">Submit</button>
+						</div>
+					</form>
+
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+
+
+
+
+
+
+			<div class="modal fade" id="lockedModal" tabindex="-1" role="dialog" aria-labelledby="lockedModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header" style="background:#F0AD4E">
+			        <h4 class="modal-title" id="lockedModalLabel">Locked Time Capsules</h4>
+			      </div>
+			      <div class="modal-body" style="color:#000000;">
+			        
+
+
+
+
+
+
+
+
+
+
+
+
+			      	{% if user.is_authenticated %}
+						<div  class="container-fluid" id="lockedTimeCaps">
+							<div class="row">
+							{%for cap in userCapsLocked%}
+								<div class="col-md-3" style="padding-bottom:10px">	
+									<div class="dropdown">
+									  <button id="dLabel" type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    <span class="glyphicon glyphicon-lock" aria-hidden="true" style="font-size:40px"></span><br/>
+										{{cap.tsUnlock|date:"M d Y"}}
+									  </button>
+									  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+									    <li role="menuitem"><a>Created on: {{cap.tsCreated|date:"M d Y"}}</a></li>
+									  </ul>
+									</div>
+								</div>	
+							{%endfor%}
+						</div>
+						</div>
+					{%endif%}
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+
+
+
+
+
+			<div class="modal fade" id="unlockedModal" tabindex="-1" role="dialog" aria-labelledby="unlockedLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header" style="background:#5CB85C">
+			        <h4 class="modal-title" id="unlockedLabel">Unlocked Time Capsules</h4>
+			      </div>
+			      <div class="modal-body" style="color:#000000">
+			        
+			      	{%if user.is_authenticated %}
+						<div  class="container-fluid" id="unlockedTimeCaps">
+							<div class="row">
+							{%for cap in userCapsUnlocked%}
+							
+							<div class="col-md-3" style="padding-bottom:10px">
+								<div class="dropdown">
+								  <button id="dLabel" type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    <span class="glyphicon glyphicon-gift" aria-hidden="true" style="font-size:40px"></span><br/>
+								    {{cap.tsCreated|date:"M d Y"}}
+								  </button>
+								  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+								    {%for tcAsset in tcAssets%}
+										{%if tcAsset.parentID == cap%}
+											<li><a href="media/{{tcAsset.asset}}" rel="lightbox">{{tcAsset.asset}}</a></li>
+										{%endif%}
+									{%endfor%}
+										<li role="presentation" class="divider"></li>
+										<li role="menuitem"><a>Created on {{cap.tsCreated|date:"M d Y"}}</a></li>
+								  </ul>
+								</div>
+							</div>
+
+							
+							{%endfor%}
+						</div>
+						</div>
+						{%endif%}
+
+
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+
+
+
+
 	</body>
 	<footer>
 	</footer>
