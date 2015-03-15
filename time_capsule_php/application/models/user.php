@@ -2,6 +2,7 @@
 Class User extends CI_Model{
  
 	function login($username, $password){
+		//Gets the id, username, and password for a given user name password combination
 		$this -> db -> select('id, username, password');
 		$this -> db -> from('users');
 		$this -> db -> where('username', $username);
@@ -19,6 +20,7 @@ Class User extends CI_Model{
 	}
 	
 	function get_user_id($username){
+		//Gets the id for a user
 		$this->db->select('id');
 		$this->db->from('users');
 		$this->db->where('username', $username);

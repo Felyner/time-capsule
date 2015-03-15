@@ -26,7 +26,7 @@
 		
 		Upload Capsule Items:
 		</br></br>
-		<div id="item">
+		<div id="items">
 			<input id="capsule_item" name="capsule_item" type="file" size="30">
 		</div>
 		
@@ -36,7 +36,7 @@
 	</div>
 	
 	<div id="display_capsules">
-	<h2>Time Capsules available to view</h2>
+	<h2>Time Capsules available to Download</h2>
 		<?php echo '<ul>'; ?>
 		<?php foreach($unlocked as $capsule): ?>
 		<?php echo '<li>'; ?>
@@ -52,13 +52,27 @@
 		<?php echo '</ul>'; ?>
 	</div>
 	
+	<h2>Locked Time Capsules </h2>
+		<?php echo '<ul>'; ?>
+		<?php foreach($locked as $capsule): ?>
+		<?php echo '<li>'; ?>
+		<?php echo $capsule->capsule_name . ' is unlocked on: ' . $capsule->ts_unlock; ?>
+			<?php echo '<ul>'; ?>
+		<?php echo '</li></br>'; ?>
+		<?php endforeach; ?>
+		<?php echo '</ul>'; ?>
+	</div>
 </body>
 
+<div id="item">
+	<input id="capsule_item" type="file" size="30" style="visibility: hidden">
+</div>
 
 
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type='text/javascript' src="<?php echo base_url().'assets/script.js';?>"></script>
 
-<script type='text/javascript' src="<?php echo base_url(); ?>libraries/capsuleaddition.js"></script>
 </html>
 
 

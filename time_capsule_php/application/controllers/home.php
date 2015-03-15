@@ -19,6 +19,7 @@ class Home extends CI_Controller {
 			$unlocked = $capsules['unlocked'];
 			$locked = $capsules['locked'];
 			
+			//Get all of the items for unlocked capsules
 			foreach($unlocked as &$capsule){
 				$capsule->items = array();
 				$items = $this->capsuleitem->get_items($capsule->capsule_id);
@@ -30,13 +31,14 @@ class Home extends CI_Controller {
 				}
 			}
 			
-
 			$data = array(
 				'username' => $session_data['username'],
 				'error' => '',
 				'unlocked' => $unlocked,
 				'locked' => $locked
 				);
+				
+			//Load the home view
 			$this->load->view('home_view', $data);
 		}
 		else{
@@ -45,23 +47,45 @@ class Home extends CI_Controller {
 		}
 	}
  
+ 
  	function download_item($capsule_id){
+ 		//Get the file path and file name requested for download
  		$data = $this->capsuleitem->get_resource_location($capsule_id);
- 		$name = $data->item_name;
- 		$path = $data->location;
+ 		$name = $data[0]->item_name;
+ 		$path = $data[0]->location;
  		force_download($name, $path);
  		
+ 		//Set other view variables
 		$session_data = $this->session->userdata('logged_in');
+		$capsules = $this->capsule->get_capsules($session_data['id']);
+		$unlocked = $capsules['unlocked'];
+		$locked = $capsules['locked'];
+			
+		//Get all of items for unlocked capsules
+		foreach($unlocked as &$capsule){
+			$capsule->items = array();
+			$items = $this->capsuleitem->get_items($capsule->capsule_id);
+			foreach($items as $item){
+				$capsule->items[] = array(
+					'location' => $item->location,
+					'item_name' => $item->item_name
+					);
+			}
+		}
+		
 		$data = array(
 			'username' => $session_data['username'],
 			'error' => '',
 			'unlocked' => array(),
 			'locked' => array()
 			);
+ 	
  		redirect('home', 'refresh');
  	}
  	
+ 	
 	function logout(){
+		//Unsets the session and destroys it
 		$this->session->unset_userdata('logged_in');
 		session_destroy();
 		redirect('home', 'refresh');
