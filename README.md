@@ -1,7 +1,15 @@
 #Time Capsule#
 
 ## Django Implementation Usage ##
-To run the Python/Django version of our application, navigate to the /time_capsule_django/ folder and run the following command
+To run the Python/Django version of our application, first install the Django framework by running the following command from your terminal
+```
+sudo pip install Django
+```
+If you currently do not have pip, please go to the following link to get the correct files and instructions:
+
+https://pip.pypa.io/en/latest/installing.html
+
+Once Django is installed, navigate to the /time_capsule_django/ folder and run the following command
 from your terminal
 ```
 python manage.py runserver
